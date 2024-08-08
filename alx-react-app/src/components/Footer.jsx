@@ -1,5 +1,5 @@
 <footer>
-  <p>"2023 city Lover"</p>
+  <p>"2023 city Lovers"</p>
 </footer>;
 
 'export', 'Footer';
