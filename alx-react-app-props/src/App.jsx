@@ -51,8 +51,9 @@ function App() {
         <UserProfile name="Alice" age="25" bio="Loves hiking and photography" />
       </div>
       <div>
-        <ProfilePage userData={userData} />;
-        <UserContext />
+        <UserContext.Provider value={userData}>
+          <ProfilePage />
+        </UserContext.Provider>
       </div>
     </>
   );
