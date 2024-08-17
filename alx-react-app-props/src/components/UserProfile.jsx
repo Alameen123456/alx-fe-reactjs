@@ -2,7 +2,8 @@ import PropTypes from 'prop-types';
 import React, { UseContext } from 'react';
 
 function UserProfile() {
-  const userData = UseContext(UseContext);
+  const userData = UserContext(UseContext);
+  const [UseContext,UserContext]
   return (
     <div>
       <h2>{userData.name}</h2>
