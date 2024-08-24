@@ -1,5 +1,7 @@
 import React from 'react';
 import RecipeList from './components/RecipeList';
+import FavoritesList from './FavoritesList';
+import RecommendationsList from './RecommendationsList';
 import AddRecipeForm from './components/AddRecipeForm';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import RecipeList from './components/RecipeList';
@@ -12,10 +14,12 @@ const App = () => {
     <div>
       <Router>
         <div>
-      <h1>Recipe Sharing Application</h1>
-      <SearchBar />
-      <FilterControls />
-      <RecipeList />
+          <h1>Recipe Sharing Application</h1>
+          <SearchBar />
+          <FilterControls />
+          <FavoritesList />
+          <RecommendationsList />
+          <RecipeList />
           <AddRecipeForm />
           <Routes>
             <Route path="/" element={<RecipeList />} />

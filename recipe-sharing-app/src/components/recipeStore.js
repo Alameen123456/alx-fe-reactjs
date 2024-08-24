@@ -1,47 +1,26 @@
 import create from 'zustand';
+
 const useRecipeStore = create((set) => ({
   recipes: [],
-  searchTerm: '',
-  filterBy: {
-    ingredients: [],
-    maxPrepTime: null,
-  },
-  setSearchTerm: (term) => set({ searchTerm: term }),
-  setFilterByIngredients: (ingredients) =>
+  favorites: [],
+
+  addFavorite: (recipeId) =>
     set((state) => ({
-      filterBy: { ...state.filterBy, ingredients },
+      favorites: [...state.favorites, recipeId],
     })),
-  setFilterByPrepTime: (time) =>
+
+  removeFavorite: (recipeId) =>
     set((state) => ({
-      filterBy: { ...state.filterBy, maxPrepTime: time },
+      favorites: state.favorites.filter((id) => id !== recipeId),
     })),
-  filteredRecipes: [],
-  filterRecipes: () =>
+
+  recommendations: [],
+
+  generateRecommendations: () =>
     set((state) => {
-      let filtered = state.recipes;
-
-      if (state.searchTerm) {
-        filtered = filtered.filter((recipe) =>
-          recipe.title.toLowerCase().includes(state.searchTerm.toLowerCase())
-        );
-      }
-
-      if (state.filterBy.ingredients.length > 0) {
-        filtered = filtered.filter((recipe) =>
-          state.filterBy.ingredients.every((ing) =>
-            recipe.ingredients.includes(ing)
-          )
-        );
-      }
-
-      if (state.filterBy.maxPrepTime) {
-        filtered = filtered.filter(
-          (recipe) => recipe.preparationTime <= state.filterBy.maxPrepTime
-        );
-      }
-
-      return { filteredRecipes: filtered };
+      const recommended = state.recipes.filter(
+        (recipe) => state.favorites.includes(recipe.id) && Math.random() > 0.5
+      );
+      return { recommendations: recommended };
     }),
 }));
-
-export { useRecipeStore };
