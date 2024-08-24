@@ -1,20 +1,47 @@
-import { create } from 'zustand';
-
+import create from 'zustand';
 const useRecipeStore = create((set) => ({
   recipes: [],
-  addRecipe: (newRecipe) =>
-    set((state) => ({ recipes: [...state.recipes, newRecipe] })),
-  deleteRecipe: (id) =>
+  searchTerm: '',
+  filterBy: {
+    ingredients: [],
+    maxPrepTime: null,
+  },
+  setSearchTerm: (term) => set({ searchTerm: term }),
+  setFilterByIngredients: (ingredients) =>
     set((state) => ({
-      recipes: state.recipes.filter((recipe) => recipe.id !== id),
+      filterBy: { ...state.filterBy, ingredients },
     })),
-  updateRecipe: (updatedRecipe) =>
+  setFilterByPrepTime: (time) =>
     set((state) => ({
-      recipes: state.recipes.map((recipe) =>
-        recipe.id === updatedRecipe.id ? updatedRecipe : recipe
-      ),
+      filterBy: { ...state.filterBy, maxPrepTime: time },
     })),
-  setRecipes: (recipes) => set({ recipes }),
+  filteredRecipes: [],
+  filterRecipes: () =>
+    set((state) => {
+      let filtered = state.recipes;
+
+      if (state.searchTerm) {
+        filtered = filtered.filter((recipe) =>
+          recipe.title.toLowerCase().includes(state.searchTerm.toLowerCase())
+        );
+      }
+
+      if (state.filterBy.ingredients.length > 0) {
+        filtered = filtered.filter((recipe) =>
+          state.filterBy.ingredients.every((ing) =>
+            recipe.ingredients.includes(ing)
+          )
+        );
+      }
+
+      if (state.filterBy.maxPrepTime) {
+        filtered = filtered.filter(
+          (recipe) => recipe.preparationTime <= state.filterBy.maxPrepTime
+        );
+      }
+
+      return { filteredRecipes: filtered };
+    }),
 }));
 
-export default useRecipeStore;
+export { useRecipeStore };
