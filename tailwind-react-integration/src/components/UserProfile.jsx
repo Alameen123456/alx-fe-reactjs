@@ -12,7 +12,7 @@ const UserProfile = ({ user }) => {
         <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold mt-4">
           {user.name}
         </h1>
-        <p className="text-sm sm:text-base md:text-lg lg:text-xl mt-2 text-center">
+        <p className="text-sm sm:text-base md:text-xl lg:text-xl mt-2 text-center">
           {user.bio}
         </p>
       </div>
